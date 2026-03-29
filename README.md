@@ -22,16 +22,16 @@ Um ecossistema completo para equipes de mídia de igrejas, projetado para gerenc
 ## 📸 Telas do Sistema
 
 ### Interface Desktop Nativa
-![Painel Principal](assets/painel.png)
+![Painel Principal](assets/Painel.png)
 
 ### Estúdio de Gravação com IA
-![Estúdio](assets/estudio.png)
+![Estúdio](assets/Estudio.png)
 
 ### Interface da Biblia
 ![Controle Celular](assets/Biblia.png)
 
 ### Interface Louvor
-![Controle Celular](assets/louvor.png)
+![Controle Celular](assets/Louvor.png)
 
 
 ## ⚙️ Como Executar o Projeto Localmente
