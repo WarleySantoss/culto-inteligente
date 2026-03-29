@@ -19,8 +19,24 @@ Um ecossistema completo para equipes de mídia de igrejas, projetado para gerenc
 * **Desktop Wrapper:** PyWebview
 * **Processamento de Áudio e Docs:** Pydub, FPDF
 
+## 📸 Telas do Sistema
+
+### Interface Desktop Nativa
+![Painel Principal](assets/painel.png)
+
+### Estúdio de Gravação com IA
+![Estúdio](assets/estudio.png)
+
+### Interface da Biblia
+![Controle Celular](assets/Biblia.png)
+
+### Interface Louvor
+![Controle Celular](assets/louvor.png)
+
+
 ## ⚙️ Como Executar o Projeto Localmente
 
 1. Clone o repositório:
    ```bash
    git clone [https://github.com/WarleySantoss/culto-inteligente.git](https://github.com/WarleySantoss/culto-inteligente.git)
+
