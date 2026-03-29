@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telão - Culto Inteligente</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 40px; background-color: #000000; color: #ffffff; font-family: 'Inter', sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; position: relative; transition: background-color 0.5s, color 0.5s; }
+        
+        /* CAMADA DE FUNDO - A MÁGICA ESTÁ AQUI */
+        .camada-fundo { 
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; 
+            z-index: 1; opacity: 0; 
+            transition: opacity 1s ease-in-out; 
+            background-position: center; 
+            background-repeat: no-repeat;
+        }
+
+        /* O GRANDE SEGREDO: MUDAMOS DE 'COVER' PARA 'CONTAIN' PARA IMAGENS */
+        #bg-imagem { 
+            background-size: contain; /* CRUCIAL FIX: contain instead of cover */
+        }
+
+        /* VÍDEO CONTINUA 'COVER' PARA PREENCHER A TELA */
+        #bg-video { 
+            background-size: cover; /* VÍDEOS DEVEM PREENCHER */
+        }
+        
+        .overlay-escuro { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 2; opacity: 0; transition: opacity 1s; }
+
+        #texto-projetado { position: relative; z-index: 3; font-size: 5rem; font-weight: 800; text-align: center; line-height: 1.3; transition: opacity 0.3s; width: 100%; text-shadow: 2px 2px 15px rgba(0,0,0,1); }
+
+        .letreiro-container { position: absolute; top: 0; left: 0; width: 100vw; background: rgba(0,0,0,0.85); color: #ffc107; font-size: 2.2rem; padding: 10px 0; z-index: 10; white-space: nowrap; overflow: hidden; font-weight: bold; border-bottom: 3px solid #ffc107; transform: translateY(-100%); transition: transform 0.4s ease-in-out; }
+        .letreiro-container.ativo { transform: translateY(0); }
+        .letreiro-texto { display: inline-block; padding-left: 100%; animation: rolarTexto 20s linear infinite; }
+        @keyframes rolarTexto { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        #relogio { 
+            position: fixed; bottom: 30px; right: 40px; 
+            font-size: 3.5rem; font-weight: 900; 
+            z-index: 999999; color: #ffc107; 
+            text-shadow: 3px 3px 15px rgba(0,0,0,1); 
+            display: none; 
+        }
+
+        /* LOWER THIRD (BARRINHA DE IDENTIFICAÇÃO) - JÁ INTEGRADO! */
+        .lower-third-container {
+            position: absolute; bottom: 80px; left: 50px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 80%, transparent 100%);
+            border-left: 8px solid #ffc107; padding: 20px 60px 20px 30px; border-radius: 8px;
+            z-index: 50; transform: translateX(-150%); 
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex; flex-direction: column; gap: 5px;
+        }
+        .lower-third-container.ativo { transform: translateX(0); }
+        .lt-nome { font-size: 3.5rem; font-weight: 900; color: white; text-shadow: 2px 2px 10px black; margin:0; line-height: 1;}
+        .lt-cargo { font-size: 1.8rem; color: #ffc107; font-weight: 600; text-shadow: 1px 1px 5px black; margin:0;}
+    </style>
+</head>
+<body>
+
+    <div id="bg-imagem" class="camada-fundo"></div>
+    <video id="bg-video" class="camada-fundo" loop muted playsinline></video>
+    <div id="overlay" class="overlay-escuro"></div>
+
+    <div id="caixa-letreiro" class="letreiro-container">
+        <div id="texto-letreiro" class="letreiro-texto"></div>
+    </div>
+
+    <div id="texto-projetado">Culto Inteligente</div>
+    
+    <div id="relogio">00:00</div>
+
+    <div id="lower-third" class="lower-third-container">
+        <h1 id="lt-nome" class="lt-nome">Nome</h1>
+        <h2 id="lt-cargo" class="lt-cargo">Cargo</h2>
+    </div>
+
+    <script>
+        const divTexto = document.getElementById('texto-projetado');
+        const bgImg = document.getElementById('bg-imagem');
+        const bgVid = document.getElementById('bg-video');
+        const overlay = document.getElementById('overlay');
+        const caixaLetreiro = document.getElementById('caixa-letreiro');
+        const textoLetreiro = document.getElementById('texto-letreiro');
+        const relogio = document.getElementById('relogio');
+        const ltContainer = document.getElementById('lower-third');
+
+        setInterval(() => { const agora = new Date(); relogio.innerText = agora.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}); }, 1000);
+
+        const ws = new WebSocket("ws://${window.location.host}/ws/telao");
+
+        ws.onmessage = function(event) {
+            const msg = event.data;
+
+            if (msg.startsWith("CMD_FUNDO:")) {
+                const partes = msg.split(":");
+                trocarFundo(partes[1], partes[2]);
+            } 
+            else if (msg.startsWith("CMD_LETREIRO:")) {
+                const textoAviso = msg.replace("CMD_LETREIRO:", "");
+                if (textoAviso.trim() === "") { caixaLetreiro.classList.remove('ativo'); } 
+                else { textoLetreiro.innerText = textoAviso; caixaLetreiro.classList.add('ativo'); }
+            }
+            else if (msg.startsWith("CMD_LOWER:")) {
+                const dados = msg.replace("CMD_LOWER:", "").split("|");
+                const nome = dados[0]; const cargo = dados[1];
+                if (nome.trim() === "" && cargo.trim() === "") { ltContainer.classList.remove('ativo'); } 
+                else { document.getElementById('lt-nome').innerText = nome; document.getElementById('lt-cargo').innerText = cargo; ltContainer.classList.add('ativo'); }
+            }
+            else if (msg.includes("CMD_RELOGIO")) {
+                relogio.classList.toggle('ativo');
+            }
+            else {
+                divTexto.style.opacity = 0;
+                setTimeout(() => { divTexto.innerHTML = msg.replace(/\n/g, '<br>'); divTexto.style.opacity = 1; }, 300); 
+            }
+        };
+
+        function trocarFundo(tipo, arquivo) {
+            document.body.style.backgroundColor = '#000000'; document.body.style.color = '#ffffff'; divTexto.style.textShadow = '2px 2px 15px rgba(0,0,0,1)';
+            
+            if (tipo === 'preto') {
+                bgImg.style.opacity = 0; bgVid.style.opacity = 0; overlay.style.opacity = 0; setTimeout(() => bgVid.pause(), 1000);
+            } 
+            else if (tipo === 'branco') {
+                bgImg.style.opacity = 0; bgVid.style.opacity = 0; overlay.style.opacity = 0; setTimeout(() => bgVid.pause(), 1000);
+                document.body.style.backgroundColor = '#ffffff'; document.body.style.color = '#000000'; divTexto.style.textShadow = 'none'; 
+            }
+            else if (tipo === 'imagem') {
+                if (arquivo) { bgImg.style.backgroundImage = `url('http://127.0.0.1:8000/midia/${arquivo}')`; }
+                bgImg.style.opacity = 1; bgVid.style.opacity = 0; overlay.style.opacity = 1; setTimeout(() => bgVid.pause(), 1000);
+            } 
+            else if (tipo === 'video') {
+                if (arquivo && !bgVid.src.endsWith(arquivo)) { bgVid.src = `http://127.0.0.1:8000/midia/${arquivo}`; }
+                bgVid.play().catch(e => console.log(e)); 
+                bgImg.style.opacity = 0; bgVid.style.opacity = 1; overlay.style.opacity = 1;
+            }
+        }
+    </script>
+</body>
+</html>

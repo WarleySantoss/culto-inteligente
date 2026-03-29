@@ -1,0 +1,13 @@
+# Ignorar o cofre de senhas
+.env
+
+# Ignorar o motor do Python (pesado e desnecessário no GitHub)
+.venv/
+__pycache__/
+
+# Ignorar o banco de dados e os PDFs gerados (dados locais da sua igreja)
+estudos.db
+pdfs/
+midia/
+temp_audio.wav
+*.webm

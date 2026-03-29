@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão Inteligente - Culto</title>
+    <style>
+        /* ==========================================
+           ESTILOS GLOBAIS E VARIÁVEIS (Padrão do App)
+           ========================================== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        :root {
+            --bg-page: #121212;
+            --bg-card: #1e1e1e;
+            --accent: #ffc107;
+            --success: #28a745;
+            --success-hover: #218838;
+            --text-primary: #ffffff;
+            --font-family: 'Inter', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            padding: 50px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+
+        /* ==========================================
+           INPUT DO TEMA
+           ========================================== */
+        .input-tema {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            display: block;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .input-tema:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.15);
+        }
+
+        /* ==========================================
+           GRID DAS CAIXAS DE TEXTO
+           ========================================== */
+        .grid-revisao {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .coluna {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .coluna h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 450px;
+            background-color: #141414;
+            color: var(--text-primary);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 18px;
+            font-family: var(--font-family);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            resize: vertical; /* Permite esticar apenas para baixo */
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        /* Deixa o texto original com aspecto de "bloqueado" */
+        #texto-bruto {
+            color: #888;
+            background-color: #1a1a1a;
+            border-color: #222;
+        }
+
+        /* ==========================================
+           BOTÃO SALVAR E BOTÃO VOLTAR
+           ========================================== */
+        .btn-salvar {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: var(--success);
+            color: white;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-salvar:hover {
+            background-color: var(--success-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.25);
+        }
+
+        .btn-salvar:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-voltar {
+            position: absolute; 
+            top: 20px; 
+            left: 20px; 
+            text-decoration: none; 
+            color: white; 
+            background-color: #333; 
+            padding: 10px 15px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            border: 1px solid #555;
+            transition: 0.2s;
+        }
+        .btn-voltar:hover { background-color: #444; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="btn-voltar">
+        🏠 Cancelar e Voltar
+    </a>
+
+    <div class="container">
+        <h2>✨ Revisão Inteligente</h2>
+        
+        <input type="text" id="tema-ensino" class="input-tema" placeholder="Digite o Tema do Ensino (ex: Parábolas de Jesus)">
+
+        <div class="grid-revisao">
+            <div class="coluna">
+                <h3 style="color: #aaa;">🎙️ Texto Bruto (Original)</h3>
+                <textarea id="texto-bruto" readonly></textarea>
+            </div>
+            
+            <div class="coluna" style="border-top: 4px solid var(--accent);">
+                <h3 style="color: var(--accent);">🤖 Correção da IA (Editável)</h3>
+                <textarea id="texto-ia"></textarea>
+            </div>
+        </div>
+
+        <button id="btnSalvar" class="btn-salvar">
+            💾 Salvar e Gerar PDF
+        </button>
+    </div>
+
+    <script src="revisao.js"></script>
+
+</body>
+</html>

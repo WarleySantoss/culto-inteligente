@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estúdio de Gravação - Culto Inteligente</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🎙️ Estúdio de Gravação</h1>
+        <div class="status-indicator">
+            <div class="dot" id="status-dot"></div>
+            <span id="status-text">Aguardando início do culto...</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="transcription-box" id="transcription-box">
+            <p class="placeholder-text" id="placeholder">
+                O texto transcrito em tempo real aparecerá aqui.<br>
+                Clique em "Gravar" para iniciar a captação do áudio.
+            </p>
+            </div>
+
+        <div class="controls">
+            <button class="btn-record" id="btnRecord">⏺ Gravar</button>
+            <button class="btn-pause" id="btnPause">⏸ Pausar</button>
+            <button class="btn-finish" id="btnFinish">⏹ Finalizar Ensino</button>
+        </div>
+
+        <a href="index.html" style="position: absolute; top: 20px; left: 20px; text-decoration: none; color: white; background-color: #333; padding: 10px 15px; border-radius: 8px; font-weight: 600; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 8px; transition: 0.2s; border: 1px solid #555;">
+        🏠 Voltar ao Painel
+        </a>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+
+       /* Variáveis de Cores para o Dark Mode */
+    :root {
+        --bg-page: #121212; /* Fundo mais profundo */
+        --bg-card: #1e1e1e;
+        --accent: #ffc107;  /* O amarelo do seu app */
+        --success: #28a745;
+        --danger: #dc3545;
+        --text-primary: #ffffff;
+        --text-secondary: #aaaaaa;
+        --font-family: 'Inter', sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-page);
+        color: var(--text-primary);
+        font-family: var(--font-family);
+        -webkit-font-smoothing: antialiased; /* Texto mais nítido */
+    }
+
+        /* Cabeçalho e Status */
+        header {
+            background-color: var(--panel-bg);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #aaa;
+        }
+
+        /* Bolinha de gravação com animação pulsante */
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #555;
+            border-radius: 50%;
+        }
+
+        .dot.recording {
+            background-color: var(--danger-color);
+            box-shadow: 0 0 10px var(--danger-color);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+
+        /* Área Principal */
+        main {
+            flex: 1;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Caixa de Transcrição */
+        .transcription-box {
+            flex: 1;
+            background-color: var(--panel-bg);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 25px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            overflow-y: auto;
+            color: #ddd;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .placeholder-text {
+            color: #777;
+            font-style: italic;
+            text-align: center;
+            margin-top: 20%;
+        }
+
+        /* Controles (Botões) */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-record { background-color: var(--danger-color); }
+        .btn-pause { background-color: var(--warning-color); color: #333; }
+        .btn-finish { background-color: var(--success-color); }
+
+        /* =========================================
+   ESTILOS DA TELA DE REVISÃO INTELIGENTE
+   ========================================= */
+.review-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide a tela em duas colunas iguais */
+    gap: 20px;
+    width: 100%;
+    height: 60vh;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column h2 {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: normal;
+}
+
+/* Estilo das caixas de texto */
+textarea {
+    flex: 1;
+    background-color: var(--panel-bg);
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #ddd;
+    resize: none; /* Impede o usuário de quebrar o layout redimensionando a caixa */
+    outline: none;
+    font-family: inherit;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* Efeito de foco quando o usuário clica para editar o texto da IA */
+textarea:focus {
+    border-color: var(--success-color);
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.4);
+}
+
+/* Deixa o texto bruto (original) com visual de "apenas leitura" */
+textarea[readonly] {
+    background-color: #151515;
+    color: #777;
+    border-color: #333;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   ESTILOS DO DASHBOARD (PAINEL INICIAL)
+   ========================================= */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: var(--panel-bg);
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.2s ease-in-out;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.card p {
+    color: #aaa;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+/* Card especial para iniciar gravação */
+.card-action {
+    border: 2px dashed var(--success-color);
+    cursor: pointer;
+    background-color: #1a1a1a;
+}
+
+.card-action:hover {
+    transform: translateY(-5px);
+    background-color: #222;
+    border-style: solid;
+    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.2);
+}
+

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle - Culto Inteligente</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        :root {
+            --bg-page: #121212; --bg-card: #1e1e1e; --accent: #ffc107; 
+            --accent-hover: #ffd14a; --text-primary: #ffffff; --text-secondary: #aaaaaa;
+            --font-family: 'Inter', sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-page); color: var(--text-primary); font-family: var(--font-family); padding: 40px; }
+        
+        /* HEADER PREMIUM */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px; }
+        .header-title { display: flex; align-items: center; gap: 15px; font-size: 1.6rem; font-weight: 800; }
+        .header-title span { color: var(--accent); }
+        
+        .btn-telao { text-decoration: none; color: black; background: var(--accent); padding: 10px 20px; border-radius: 8px; font-weight: 700; transition: 0.2s; font-size: 0.95rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn-telao:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+        /* GRID INFORMAÇÕES (SUPERIOR) */
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .card-info { background: var(--bg-card); padding: 25px; border-radius: 12px; border: 1px solid #333; display: flex; flex-direction: column; gap: 15px; transition: 0.2s; }
+        .card-info h3 { color: #aaa; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .content { display: flex; align-items: center; gap: 20px; }
+        .icon-lg { font-size: 3rem; color: var(--accent); }
+        .text-lg { font-size: 1.2rem; font-weight: 600; line-height: 1.4; }
+        
+        .btn-acao { text-decoration: none; color: white; background: #333; padding: 12px; border-radius: 8px; font-weight: 600; text-align: center; transition: 0.2s; width: 100%; display: block; border: 1px solid #444;}
+        .btn-acao:hover { background: #444; border-color: #555; }
+
+        /* GRID DE MÓDULOS (TILES PREMIUM) */
+        .grid-modulos { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;}
+        
+        .modulo-tile { text-decoration: none; background: var(--bg-card); padding: 30px; border-radius: 15px; border: 2px solid #333; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; transition: all 0.3s ease; cursor: pointer; text-align: center;}
+        
+        .modulo-tile.louvores { border-bottom: 4px solid #6f42c1; } /* Roxo */
+        .modulo-tile.biblia { border-bottom: 4px solid #17a2b8; } /* Azul */
+        
+        .modulo-tile:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); background: #252525;}
+        
+        .modulo-tile .icon-xl { font-size: 4rem; margin-bottom: 10px; }
+        .modulo-tile h2 { color: white; font-size: 1.6rem; font-weight: 800; }
+        .modulo-tile p { color: #aaa; font-size: 0.95rem; line-height: 1.4; max-width: 250px; }
+
+        /* CARD DE ENSINOS GRAVADOS (PDFS) */
+        .card-ensinos { grid-column: span 2; background: var(--bg-card); padding: 25px; border-radius: 12px; border: 1px solid #333; margin-top: 20px; }
+        .card-ensinos h3 { color: #aaa; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px;}
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem;}
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #333; }
+        th { color: #aaa; font-weight: 600;}
+        tr:hover td { background: #222;}
+        .btn-pdf { text-decoration: none; color: var(--accent); font-weight: bold; font-size: 1rem;}
+        .btn-pdf:hover { text-decoration: underline; }
+        
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-title">🏠 Painel de Controle <span>Culto Inteligente</span></div>
+        <button onclick="abrirJanelaTelao()" class="btn-telao">📺 Abrir Janela do Telão</button>
+    </div>
+
+    <div class="grid-modulos">
+        <a href="louvores.html" class="modulo-tile louvores">
+            <div class="icon-xl">🎵</div>
+            <h2>Acervo de Louvores</h2>
+        </a>
+
+        <a href="biblia.html" class="modulo-tile biblia">
+            <div class="icon-xl">📖</div>
+            <h2>Bíblia Sagrada</h2>
+        </a>
+    </div>
+
+    <div class="grid-info">
+        <div class="card-info">
+            <h3>➕ Iniciar Novo Culto</h3>
+            <div class="content">
+                <div class="icon-lg">🎙️</div>
+                <div class="text-lg">Gravar e transcrever um novo ensino com IA.</div>
+            </div>
+            <a href="estudio.html" class="btn-acao">▶️ Iniciar Estúdio</a>
+        </div>
+
+        <div class="card-info">
+            <h3>📊 Resumo da Atividade</h3>
+            <div class="content" style="gap: 10px; flex-wrap: wrap;">
+                <div style="flex:1; background: #1a1a1a; padding: 10px; border-radius: 6px; text-align:center;">
+                    <div style="color:#aaa; font-size:0.8rem;">Cultos Gravados (Mês)</div>
+                    <div style="font-size:1.8rem; font-weight:800; color:var(--accent);">1</div>
+                </div>
+                <div style="flex:1; background: #1a1a1a; padding: 10px; border-radius: 6px; text-align:center;">
+                    <div style="color:#aaa; font-size:0.8rem;">IA: Online</div>
+                    <div style="font-size:1.2rem; font-weight:800; color:#28a745;">ON ✅</div>
+                </div>
+            </div>
+            <p style="color:#888; font-size:0.8rem; margin-top:-5px;">Último: 20/03/2026 19:55</p>
+        </div>
+
+        <div class="card-ensinos">
+            <h3>📂 Acervo de Ensino (PDFs)</h3>
+            <div id="lista-pdfs"><p style="color:#888;">Carregando registros...</p></div>
+        </div>
+    </div>
+
+    <script>
+        function abrirJanelaTelao() {
+            window.open('telao.html', 'TelaoCulto', 'width=1280,height=720,menubar=no,status=no,toolbar=no');
+            alert("Janela do Telão aberta! Agora arraste ela para o Projetor e aperte F11 (tela cheia).");
+        }
+
+        // Carrega os PDFs na tabela
+        async function carregarEnsinosPDF() {
+            try {
+                const res = await fetch("/listar-ensinos");
+                const ensinos = await res.json();
+                
+                const listaDiv = document.getElementById('lista-pdfs');
+                
+                if(ensinos.length === 0) {
+                    listaDiv.innerHTML = "<p style='color:#888;'>Nenhum ensino gravado no banco de dados.</p>";
+                    return;
+                }
+
+                let htmlTabela = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>TEMA</th>
+                                <th>DATA</th>
+                                <th>DOWNLOAD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+
+                ensinos.forEach(e => {
+                    htmlTabela += `
+                        <tr>
+                            <td>${e.id}</td>
+                            <td>${e.tema}</td>
+                            <td>${e.data}</td>
+                            <td><a href="/${e.pdf}" target="_blank" class="btn-pdf">📥 Baixar PDF</a></td>
+                        </tr>
+                    `;
+                });
+
+                htmlTabela += `</tbody></table>`;
+                listaDiv.innerHTML = htmlTabela;
+
+            } catch(e) { console.error(e); }
+        }
+
+        window.onload = carregarEnsinosPDF;
+    </script>
+</body>
+</html>
